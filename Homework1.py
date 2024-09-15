@@ -26,19 +26,34 @@ sql = "SELECT * FROM menu"
 
 def main():
 
-    option = int(input('Welcome to the Cougar Cafe!!!!!!\n'
+    print('Welcome to the Cougar Cafe!!!!!!\n'
               'Please select from the options below:\n'
               'Press 1 to view our full menu\n'
               'Press 2 to start an order\n'
-              'Press 3 to exit\n'))
+              'Press 3 to exit\n')
+    
+    option = int(input("Please choose an option: "))
     
     if option == 1:
-        cursor.execute(sql)
-        rows = cursor.fetchall()
+        print("Here is our full menu:\n")
+        cursor.execute("SELECT item_id, item_name, item_price FROM menu")
+        menu = cursor.fetchall()
 
-        for x in rows:
+        for item in menu:
             
-            print(x)
+            item_id = item['item_id']
+            item_name = item['item_name']
+            item_price = item['item_price']
+    
+            item_price = float(item_price)
+            print(f"{item_id}. {item_name} - ${item_price:.2f}")
+   
+
 
 if __name__ == "__main__":
     main()
+
+
+
+
+
