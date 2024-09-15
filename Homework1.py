@@ -47,6 +47,39 @@ def main():
     
             item_price = float(item_price)
             print(f"{item_id}. {item_name} - ${item_price:.2f}")
+
+    if option == 2:
+        order_items = []
+        total_amount = 0.0  
+
+    while True:
+        try:
+            item_input = input("\nEnter the item ID to add to your order, or type 'done' to finish: ").strip()
+            if item_input.lower() == 'done':
+                break
+            item_id = int(item_input)
+
+            cursor.execute("SELECT item_id, item_name, item_price FROM menu WHERE item_id = %s", (item_id,))
+            item = cursor.fetchone()
+
+            if not item:
+                print("Invalid item ID. Please try again.")
+                continue
+
+            item_name = item['item_name']
+            item_price = float(item['item_price'])
+
+            order_items.append((item_name, item_price))
+            total_amount += item_price
+            print(f"Added '{item_name}' to your order. Current total: ${total_amount:.2f}")
+
+        except ValueError:
+            print("Invalid input. Please enter a valid item ID or 'done' to finish.")
+
+    print("\nYour Order:")
+    for idx, (name, price) in enumerate(order_items, 1):
+        print(f"{idx}. {name} - ${price:.2f}")
+    print(f"Total Amount: ${total_amount:.2f}")
    
 
 
