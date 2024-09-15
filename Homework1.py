@@ -30,13 +30,14 @@ def main():
               'Please select from the options below:\n'
               'Press 1 to view our full menu\n'
               'Press 2 to start an order\n'
-              'Press 3 to exit'))
+              'Press 3 to exit\n'))
     
     if option == 1:
         cursor.execute(sql)
         rows = cursor.fetchall()
 
         for x in rows:
+            
             print(x)
 
 if __name__ == "__main__":
